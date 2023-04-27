@@ -1,0 +1,49 @@
+.todo-{
+    &heading{
+        background: $ternary-bg-color-light;
+        text-align: center;
+        padding: 20px;
+        text-transform: uppercase;
+    }
+    &form{
+        display: grid;
+        grid-template-columns: repeat( 2, 50% );
+        max-width: 800px;
+        margin: 0 auto;
+        &-info{
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+            input{
+                margin-bottom: 10px;
+            }
+            input, textarea{
+                padding: 10px;
+                font-size: 18px;
+                color: $primary-bg-color;
+                outline: 0;
+                font-family: $primary-font-family;
+            }
+        }
+    }
+    &create-btn{
+        padding: 10px 20px;
+        background:transparent;
+        border: 2px solid $primary-bg-color;
+        border-radius: 10px;
+        outline: 0;
+        box-shadow: 10px 10px $primary-bg-color;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        font-size: 20px;
+        &:hover{
+            transform: translateY(-3px);
+            box-shadow: 8px 8px $primary-bg-color;
+        }
+        &:focus:active{
+            transform: translateY(-5px);
+            box-shadow: 3px 3px $primary-bg-color;
+        }
+    }
+}

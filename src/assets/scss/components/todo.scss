@@ -1,0 +1,99 @@
+.todo-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    &-wrapper{
+        padding: 30px;
+        margin-top: 20px;
+    }
+    &-item{
+        flex: 1 1 33.33%;
+        list-style: none;
+        padding: 15px 30px;
+        background-color: $primary-text-color;
+        border: 1px solid $primary-bg-color;
+        border-radius: 5px;
+        box-shadow: 10px 10px $primary-bg-color;
+        transition: all 0.3s ease;
+        &__checkbox:checked + .todo-list-item__title{
+            text-decoration: line-through;
+            background-color: $primary-completed-icon-color;
+            color: $primary-text-color;
+            padding: 0px 20px;
+        }
+        input, textarea{
+            padding: 10px;
+            font-size: 18px;
+            color: $primary-bg-color;
+            outline: 0;
+            font-family: $primary-font-family;
+            margin-bottom: 10px;
+        }
+        &:hover{
+            transform: translateY( 3px );
+            box-shadow: 5px 5px $primary-bg-color;
+        }
+        &__heading{
+            display: flex;
+            align-items: center;
+        }
+        &__checkbox{
+            height: 18px;
+            width: 18px;
+        }
+        &__title{
+            margin-left: 5px;
+            letter-spacing: 1px;
+        }
+        &__btns{
+            text-align: right;
+        }
+        &__btn{
+            background-color: transparent;
+            border: 1px solid $secondary-bg-color;
+            border-radius: 2px;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            cursor: pointer;
+            &--edit{
+                margin-right: 10px;
+                background-color: $primary-edit-icon-color;
+                transition: all 0.3s ease;
+                &:focus:active{
+                    transform: translateY( 0 );
+                    box-shadow: none;
+                }
+                &:hover{
+                    transform: translateY( -3px );
+                    box-shadow: 3px 3px $primary-bg-color;
+                }
+            }
+            &--delete{
+                background-color: $secondary-btn-color;
+                transition: all 0.3s ease;
+                &:focus:active{
+                    transform: translateY( 0 );
+                    box-shadow: none;
+                }
+                &:hover{
+                    transform: translateY( -3px );
+                    box-shadow: 3px 3px $primary-bg-color;
+                }
+            }
+
+            &--cancel{
+                margin-right: 10px;
+                background-color: $primary-add-icon-color;
+                transition: all 0.3s ease;
+                &:focus:active{
+                    transform: translateY( 0 );
+                    box-shadow: none;
+                }
+                &:hover{
+                    transform: translateY( -3px );
+                    box-shadow: 3px 3px $primary-bg-color;
+                }
+            }
+        }
+    }
+}
