@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 
 interface ToDoItemProps {
@@ -5,9 +6,6 @@ interface ToDoItemProps {
     id: number;
     title: string;
     description: string;
-    isCompleted: boolean;
-    deleteTodo: (id: number) => void;
-    toggleTodo: (id: number) => void;
   };
   editTodo: (id: number, title: string, description: string) => void;
   onDelete: () => void;
@@ -44,7 +42,7 @@ function TodoItem({ todo, onDelete, editTodo }: ToDoItemProps) {
   };
 
   return (
-    <div className="todo-list-item" id={id}>
+    <div className="todo-list-item">
       <div className="todo-list-item__content">
         <div className="todo-list-item__heading">
           {/* Add a checkbox. */}

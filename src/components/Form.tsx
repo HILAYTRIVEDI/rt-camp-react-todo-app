@@ -1,16 +1,21 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import TodoItem from './TodoItem';
 
-interface TodoFormProps {
-  title: string;
-  description: string;
+interface Todo {
+  id: number,
+  title: string,
+  description: string
 }
 
-function Form(attrs: TodoFormProps) {
+interface TodoInput {
+  title: string,
+  description: string
+}
 
-  var { title, description } = attrs;
+function Form() {
 
-  const [newTodo, setNewTodo] = useState("");
+  const [newTodo, setNewTodo] = useState({} as TodoInput);
 
   const [todos, setTodos] = useState(() => {
     const savedTodos = localStorage.getItem('todos');
@@ -31,7 +36,7 @@ function Form(attrs: TodoFormProps) {
    * @param {React.ChangeEvent<HTMLInputElement>} e
    * @returns {void}
    */
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
     setNewTodo({
       ...newTodo,
@@ -45,7 +50,7 @@ function Form(attrs: TodoFormProps) {
    * @param {React.ChangeEvent<HTMLTextAreaElement>} e
    * @returns {void}
    */
-  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     e.preventDefault();
     setNewTodo({
       ...newTodo,
@@ -59,7 +64,7 @@ function Form(attrs: TodoFormProps) {
    * @param {React.MouseEvent<HTMLButtonElement>} e
    * @returns {void}
    */
-  const createListItem = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const createListItem = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
 
     // add alert if the title of the todo is empty.
@@ -70,7 +75,7 @@ function Form(attrs: TodoFormProps) {
 
     // Get the title and description from the form.
     const todo = {
-      id: Math.max(...todos.map((todo) => todo.id), 0) + 1,
+      id: Math.max(...todos.map((todo: Todo) => todo.id), 0) + 1,
       title: newTodo.title,
       description: newTodo.description
     }
@@ -88,15 +93,12 @@ function Form(attrs: TodoFormProps) {
   /**
    * Handle the deletion of a todo item.
    * 
-   * @param {number} index
+   * @param {number} id
    * @returns {void}
    */
-  const deleteListItem = (index: number) => {
-    // Copy the current todos array to a new array
-    const updatedTodos = [...todos];
-
-    // Remove the todo item at the given index
-    updatedTodos.splice(index, 1);
+  const deleteListItem = (id: number): void => {
+    // Filter the todos array to remove the todo item at the given index
+    const updatedTodos = todos.filter((todo: Todo) => todo.id !== id);
 
     // Update the todos state with the updated array
     setTodos(updatedTodos);
@@ -108,19 +110,14 @@ function Form(attrs: TodoFormProps) {
    * @param {number} id
    * @returns {void}
    */
-  const saveEditedListItem = (id: number, title: string, description: string) => {
-    // Copy the current todos array to a new array
-    const updatedTodos = [...todos];
-
-    // Find the index of the todo item with the given id
-    const index = updatedTodos.findIndex((todo) => todo.id === id);
-
-    // Update the todo item at the given index
-    updatedTodos[index] = {
-      id,
-      title,
-      description
-    };
+  const saveEditedListItem = (id: number, title: string, description: string): void => {
+    const updatedTodos = todos.map((todo: Todo) => {
+      if (todo.id === id) {
+        todo.title = title;
+        todo.description = description;
+      }
+      return todo;
+    });
 
     // Update the todos state with the updated array
     setTodos(updatedTodos);
@@ -136,7 +133,7 @@ function Form(attrs: TodoFormProps) {
           <form className="todo-form">
             <div className="todo-form-info">
               <input type="text" name="" id="todo-title" placeholder='Title' value={newTodo.title} onChange={handleTitleChange} />
-              <textarea name="todo-desc" id="todo-desc" cols="30" rows="10" value={newTodo.description} placeholder='Description' onChange={handleDescChange} />
+              <textarea name="todo-desc" id="todo-desc" cols={30}  rows={10} value={newTodo.description} placeholder='Description' onChange={handleDescChange} />
             </div>
             <button className='todo-create-btn' onClick={createListItem}> Create Task </button>
           </form>
@@ -147,8 +144,8 @@ function Form(attrs: TodoFormProps) {
           <div className='todo-list'>
             {
               // Render todos from todos array
-              todos.map((todo, index) => (
-                <TodoItem key={index} todo={todo} editTodo={saveEditedListItem} onDelete={() => deleteListItem(index)} />
+              todos.map((todo: Todo, index: number) => (
+                <TodoItem key={index} todo={todo} editTodo={saveEditedListItem} onDelete={() => deleteListItem(todo.id)} />
               ))
             }
           </div>
